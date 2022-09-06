@@ -1,0 +1,15 @@
+sqlite3 database.db
+
+CREATE TABLE user(user_id INTEGER PRIMARY KEY NOT NULL, profile_photo TEXT NOT NULL, user_name TEXT NOT NULL, password TEXT NOT NULL);
+
+CREATE TABLE conversation(conversation_id INTEGER PRIMARY KEY NOT NULL, conversation_name TEXT NOT NULL, conversation_photo TEXT, last_message TEXT);
+
+CREATE TABLE conversation_member(user_id INTEGER NOT NULL,
+conversation_id INTEGER NOT NULL,
+joined_datetime TEXT NOT NULL, 
+left_datetime TEXT NOT NULL,
+lms_checked INTEGER NOT NULL,
+FOREIGN KEY(user_id) REFERENCES user(user_id)
+FOREIGN KEY(conversation_id) REFERENCES conversation(conversation_id));
+
+CREATE TABLE message(message_id INTEGER PRIMARY KEY NOT NULL, from_user TEXT NOT NULL, message_type INTEGER NOT NULL, message_text TEXT NOT NULL, send_dateime TEXT NOT NULL, conversation_id INTEGER NOT NULL, isDeleted INTEGER NOT NULL, filename TEXT NOT NULL, FOREIGN KEY(conversation_id) REFERENCES conversation(conversation_id));
